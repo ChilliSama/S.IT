@@ -10,4 +10,5 @@ if(!$connect){
     debug_to_console("Connected to sit_db table ✓");
 }
 
+
 ?>
