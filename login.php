@@ -14,11 +14,7 @@
             $id = mysqli_fetch_assoc(mysqli_query($connect, $query));
             $user_name = $id['prenom']. ".". $id['nom'];
 
-            if ($stay_connected = "true"){
-                setcookie('user_id', "{$user_name}", time()+3600*24*15,  '/', '', false, false);
-            } else {
-                setcookie('user_id', "{$user_name}", time()+3600*24,  '/', '', false, false);
-            }
+            set_auth_cookie($stay_connected);
 
             echo '<script type="text/javascript">','login_user();','</script>';
 
