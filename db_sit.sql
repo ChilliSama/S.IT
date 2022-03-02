@@ -61,3 +61,18 @@ CREATE TABLE `day_seat_user` (
   FOREIGN KEY(`day_id_user`) REFERENCES `user`(`id_user`),
   FOREIGN KEY(`day_id_seat`) REFERENCES `seat`(`id_seat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for authentification token
+--
+
+CREATE TABLE `auth_tokens` (
+    `id` integer(11) UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `selector` char(12),
+    `token` char(64),
+    `userid` integer(11) UNSIGNED not null,
+    `expires` datetime
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
