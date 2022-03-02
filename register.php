@@ -1,4 +1,4 @@
-<?php include "header.php"; ?>
+<?php include "ressources/php/header.php"; ?>
 
 <?php    
     if(isset($_POST['submit'])){
@@ -80,4 +80,4 @@
     </form>
 </div>
 
-<?php include "footer.php"; ?>
+<?php include "ressources/php/footer.php"; ?>

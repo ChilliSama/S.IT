@@ -1,9 +1,9 @@
-<?php include "header.php"; ?>
+<?php include "ressources/php/header.php"; ?>
 
 <?php    
     if(isset($_POST['submit'])){
-        $email = $_POST['email'];
-        $pswd = hash('sha256', $_POST['password']);
+        $email = htmlentities($_POST['email']);
+        $pswd = hash('sha256', htmlentities($_POST['password']));
         $stay_connected = isset($_POST['stay_connected']) ? $_POST['stay_connected'] : false;
 
         $query = "SELECT email, pswd FROM user WHERE email='{$email}' AND pswd='{$pswd}'";
@@ -65,4 +65,4 @@
     </form>
 </div>
 
-<?php include "footer.php"; ?>
+<?php include "ressources/php/footer.php"; ?>
