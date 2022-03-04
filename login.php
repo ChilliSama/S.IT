@@ -1,6 +1,31 @@
 <?php include "ressources/php/header.php"; ?>
 
 <?php    
+    function set_auth_cookie($rem, $id, $connect){
+        $selector = base64_encode(random_bytes(9));
+        $authenticator = random_bytes(33);
+        
+        if ($rem) {
+            $timer = time() + 3600*24*15;
+        } else {
+            $timer = time() + 3600;
+        }
+        setcookie(
+            'remember',
+             $selector.':'.base64_encode($authenticator),
+             $timer,
+             $_SERVER['HTTP_HOST'],
+             '',
+             false, // TLS-only
+             false  // http-only
+        );
+        
+        $authenticator = hash("sha256", $authenticator);
+        $query = "INSERT INTO auth_tokens(id, selector, token, userid, expires) ";
+        $query .= "VALUE (0, '{$selector}', '{$authenticator}', {$id}, '{$timer}')";
+        $query_add = mysqli_query($connect, $query);
+    }
+
     if(isset($_POST['submit'])){
         $email = htmlentities($_POST['email']);
         $pswd = hash('sha256', htmlentities($_POST['password']));
@@ -10,13 +35,13 @@
         $check = mysqli_fetch_assoc(mysqli_query($connect, $query));
 
         if (isset($check['email']) && ($check['email'] = $email && $check['pswd'] = $pswd)){
-            $query = "SELECT prenom, nom FROM user WHERE email = '{$email}'";
+            $query = "SELECT prenom, nom, id_user FROM user WHERE email = '{$email}'";
             $id = mysqli_fetch_assoc(mysqli_query($connect, $query));
             $user_name = $id['prenom']. ".". $id['nom'];
 
-            set_auth_cookie($stay_connected);
+            set_auth_cookie($stay_connected, $id["id_user"], $connect);
 
-            echo '<script type="text/javascript">','login_user();','</script>';
+            // echo '<script type="text/javascript">','login_user();','</script>';
 
             header("Location: /index.php");
             die();
