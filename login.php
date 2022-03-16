@@ -1,6 +1,10 @@
 <?php include "ressources/php/header.php"; ?>
 
 <?php    
+// debug
+// if (isset($_POST)) {
+//     var_dump($_POST);
+// }
     function set_auth_cookie($rem, $id, $connect){
         $selector = base64_encode(random_bytes(9));
         $authenticator = random_bytes(33);
@@ -22,9 +26,13 @@
         
         $authenticator = hash("sha256", $authenticator);
         $query = "INSERT INTO auth_tokens(id, selector, token, userid, expires) ";
-        $query .= "VALUE (0, '{$selector}', '{$authenticator}', {$id}, '{$timer}')";
+        $query .= "VALUE (0, '{$selector}', '{$authenticator}', '2', '{$timer}')";
+        var_dump($query);
+         die();
         $query_add = mysqli_query($connect, $query);
     }
+
+
 
     if(isset($_POST['submit'])){
         $email = htmlentities($_POST['email']);
@@ -32,18 +40,26 @@
         $stay_connected = isset($_POST['stay_connected']) ? $_POST['stay_connected'] : false;
 
         $query = "SELECT email, pswd FROM user WHERE email='{$email}' AND pswd='{$pswd}'";
+
         $check = mysqli_fetch_assoc(mysqli_query($connect, $query));
+      
 
         if (isset($check['email']) && ($check['email'] = $email && $check['pswd'] = $pswd)){
             $query = "SELECT prenom, nom, id_user FROM user WHERE email = '{$email}'";
             $id = mysqli_fetch_assoc(mysqli_query($connect, $query));
             $user_name = $id['prenom']. ".". $id['nom'];
 
+            $test = intval($id);
+            $t2 = 2;
+            
+            // var_dump($query, $id, $test,$id["id_user"],$t2, $user_name);
+            // die();
+
             set_auth_cookie($stay_connected, $id["id_user"], $connect);
 
             // echo '<script type="text/javascript">','login_user();','</script>';
 
-            header("Location: /index.php");
+            //header("Location: /index.php");
             die();
         } else {
             echo '  </br>
@@ -55,6 +71,8 @@
         }
     }
 ?>
+
+
 
 <div class="container-fluid">
     <form action="" method="post" ></br></br></br>
