@@ -1,6 +1,11 @@
 <?php include "ressources/php/header.php"; ?>
 
-<?php    
+<?php
+// $t=time();
+// echo($t. " - second since January 1 1970 00:00:00 GMT" . "<br>");
+// echo(date('l jS \of F Y h:i:s A',$t). " - today (cast in string)". "<br>");
+// echo(strtotime(date('h:i:s A',$t)). " second after recast time->date->strtotime". "<br>");
+
 // debug
 // if (isset($_POST)) {
 //     var_dump($_POST);
@@ -24,11 +29,10 @@
              false  // http-only
         );
         
+        $timer = date("Y-m-d h:i:s", $timer);
         $authenticator = hash("sha256", $authenticator);
         $query = "INSERT INTO auth_tokens(id, selector, token, userid, expires) ";
         $query .= "VALUE (0, '{$selector}', '{$authenticator}', '2', '{$timer}')";
-        var_dump($query);
-         die();
         $query_add = mysqli_query($connect, $query);
     }
 
@@ -57,9 +61,9 @@
 
             set_auth_cookie($stay_connected, $id["id_user"], $connect);
 
-            // echo '<script type="text/javascript">','login_user();','</script>';
+            echo '<script type="text/javascript">','login_user();','</script>';
 
-            //header("Location: /index.php");
+            header("Location: /index.php");
             die();
         } else {
             echo '  </br>

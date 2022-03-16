@@ -2,7 +2,7 @@
 
 include "debug.php";
 
-$connect = mysqli_connect("host","user","password","database");
+$connect = mysqli_connect("localhost","root","","sit_db");
 
 if(!$connect){
     die("Connection failed: " . mysqli_connect_error());
