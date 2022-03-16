@@ -15,9 +15,9 @@
         $authenticator = random_bytes(33);
         
         if ($rem) {
-            $timer = time() + 3600*24*15;
+            $timer = time() + 36000 + 3600*24*15; //GTM+1 + 15 days
         } else {
-            $timer = time() + 3600;
+            $timer = time() + 3600*2;
         }
         setcookie(
             'remember',
@@ -32,7 +32,7 @@
         $timer = date("Y-m-d h:i:s", $timer);
         $authenticator = hash("sha256", $authenticator);
         $query = "INSERT INTO auth_tokens(id, selector, token, userid, expires) ";
-        $query .= "VALUE (0, '{$selector}', '{$authenticator}', '2', '{$timer}')";
+        $query .= "VALUE (0, '{$selector}', '{$authenticator}', '{$id}', '{$timer}')";
         $query_add = mysqli_query($connect, $query);
     }
 
