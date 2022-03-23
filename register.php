@@ -8,10 +8,17 @@
         $pswd = hash('sha256', $_POST['password']);
         $organisation = $_POST['organisation'];
 
-        $query = "SELECT email FROM user WHERE email = '{$email}'";
-        $check = mysqli_fetch_assoc(mysqli_query($connect, $query));
+        $query = "SELECT email FROM user WHERE email = :email";
+        $checkStatement = $db->prepare($query);
+        $checkStatement->execute([
+            'email' => $email,
+        ]);
+        $check = $checkStatement->fetch(PDO::FETCH_ASSOC);
+        // var_dump($check);
+        // die();
 
-        if ($check['email']){
+
+        if ($check['email'] = $email){
             echo '  </br>
                     <div class="d-flex justify-content-center align-items-center">
                         <div class="alert-danger px-4" style="border-radius: 10px;">
@@ -20,9 +27,19 @@
                     </div>';
         } else {
             $query = "INSERT INTO user(id_user, nom, prenom, position, email, pswd, organisation) ";
-            $query .= "VALUE (0, '{$name}', '{$firstname}', 0, '{$email}', '{$pswd}', '{$organisation}')";
-
-            $query_add = mysqli_query($connect, $query);
+            $query .= "VALUE (:id_user, :nom, :prenom, :position, :email, :pswd, :organisation)";
+            $query_add = $db->prepare($query);
+            $query_add->execute([
+                'id_user' => 0,
+                'nom' => $name,
+                'prenom' => $firstname,
+                'position' => 0,
+                'email' => $email,
+                'pswd' => $pswd,
+                'organisation' => $organisation,
+            ]);
+            // var_dump($query_add);
+            // die();
 
             if ($query_add = 1){
                 header("Location: /index.php");

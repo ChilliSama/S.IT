@@ -10,7 +10,7 @@
 // if (isset($_POST)) {
 //     var_dump($_POST);
 // }
-    function set_auth_cookie($rem, $id, $connect){
+    function set_auth_cookie($rem, $userid, $db){
         $selector = base64_encode(random_bytes(9));
         $authenticator = random_bytes(33);
         
@@ -32,8 +32,15 @@
         $timer = date("Y-m-d h:i:s", $timer);
         $authenticator = hash("sha256", $authenticator);
         $query = "INSERT INTO auth_tokens(id, selector, token, userid, expires) ";
-        $query .= "VALUE (0, '{$selector}', '{$authenticator}', '{$id}', '{$timer}')";
-        $query_add = mysqli_query($connect, $query);
+        $query .= "VALUE (:id, :selector, :authenticator, :userid, :timer)";
+        $query_add = $db->prepare($query);
+        $query_add->execute([
+            'id' => 0,
+            'selector' => $selector,
+            'authenticator' => $authenticator,
+            'userid' => $userid,
+            'timer' => $timer,
+        ]);
     }
 
 
@@ -43,14 +50,24 @@
         $pswd = hash('sha256', htmlentities($_POST['password']));
         $stay_connected = isset($_POST['stay_connected']) ? $_POST['stay_connected'] : false;
 
-        $query = "SELECT email, pswd FROM user WHERE email='{$email}' AND pswd='{$pswd}'";
-
-        $check = mysqli_fetch_assoc(mysqli_query($connect, $query));
-      
+        $query = "SELECT email, pswd FROM user WHERE email= :email AND pswd= :pswd";
+        $checkStatement = $db->prepare($query);
+        $checkStatement->execute([
+            'email' => $email,
+            'pswd' => $pswd,
+        ]);
+        $check = $checkStatement->fetch(PDO::FETCH_ASSOC);
+        // var_dump($check);
+        // die();
 
         if (isset($check['email']) && ($check['email'] = $email && $check['pswd'] = $pswd)){
-            $query = "SELECT prenom, nom, id_user FROM user WHERE email = '{$email}'";
-            $id = mysqli_fetch_assoc(mysqli_query($connect, $query));
+            $query = "SELECT prenom, nom, id_user FROM user WHERE email = :email";
+            $idStatement = $db->prepare($query);
+            $idStatement->execute([
+                'email' => $email,
+            ]);
+            $id = $idStatement->fetch(PDO::FETCH_ASSOC);
+
             $user_name = $id['prenom']. ".". $id['nom'];
 
             $test = intval($id);
@@ -59,7 +76,7 @@
             // var_dump($query, $id, $test,$id["id_user"],$t2, $user_name);
             // die();
 
-            set_auth_cookie($stay_connected, $id["id_user"], $connect);
+            set_auth_cookie($stay_connected, $id["id_user"], $db);
 
             echo '<script type="text/javascript">','login_user();','</script>';
 
@@ -103,7 +120,7 @@
             <div></div><div></div><div></div>
         </div></br></br>
         <div class="d-flex justify-content-center align-items-center">
-            <button type="submit" name="submit" class="btn btn-primary">S'inscrire</button>
+            <button type="submit" name="submit" class="btn btn-primary">Se Connecter</button>
         </div>
     </form>
 </div>
