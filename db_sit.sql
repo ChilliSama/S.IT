@@ -53,7 +53,8 @@ INSERT INTO `seat` (`id_seat`, `pos_restrict`) VALUES (1, 1);
 --
 
 CREATE TABLE `day_seat_user` (
-  `day_date` date PRIMARY KEY NOT NULL,
+  `id` INT(4) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  `day_date` date NOT NULL,
   `day_id_user` integer DEFAULT NULL,
   `day_id_seat` integer DEFAULT NULL,
   INDEX(`day_id_user`),
