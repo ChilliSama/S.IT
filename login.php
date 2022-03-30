@@ -69,9 +69,6 @@
             $id = $idStatement->fetch(PDO::FETCH_ASSOC);
 
             $user_name = $id['prenom']. ".". $id['nom'];
-
-            $test = intval($id);
-            $t2 = 2;
             
             // var_dump($query, $id, $test,$id["id_user"],$t2, $user_name);
             // die();

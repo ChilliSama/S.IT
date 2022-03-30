@@ -14,11 +14,10 @@
             'email' => $email,
         ]);
         $check = $checkStatement->fetch(PDO::FETCH_ASSOC);
-        // var_dump($check);
         // die();
 
 
-        if ($check['email'] = $email){
+        if ($check['email']){
             echo '  </br>
                     <div class="d-flex justify-content-center align-items-center">
                         <div class="alert-danger px-4" style="border-radius: 10px;">

@@ -73,7 +73,9 @@ CREATE TABLE `auth_tokens` (
     `id` integer(11) UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
     `selector` char(12),
     `token` char(64),
-    `userid` integer(11) UNSIGNED not null,
-    `expires` datetime
+    `userid` integer DEFAULT NULL,
+    `expires` datetime,
+    INDEX(`userid`),
+    FOREIGN KEY(`userid`) REFERENCES `user`(`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
