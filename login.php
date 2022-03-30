@@ -1,22 +1,79 @@
 <?php include "ressources/php/header.php"; ?>
 
-<?php    
+<?php
+// $t=time();
+// echo($t. " - second since January 1 1970 00:00:00 GMT" . "<br>");
+// echo(date('l jS \of F Y h:i:s A',$t). " - today (cast in string)". "<br>");
+// echo(strtotime(date('h:i:s A',$t)). " second after recast time->date->strtotime". "<br>");
+
+// debug
+// if (isset($_POST)) {
+//     var_dump($_POST);
+// }
+    function set_auth_cookie($rem, $userid, $db){
+        $selector = base64_encode(random_bytes(9));
+        $authenticator = random_bytes(33);
+        
+        if ($rem) {
+            $timer = time() + 3600*2 + 3600*24*15; //GTM+2 + 15 days
+        } else {
+            $timer = time() + 3600*2 + 3600;
+        }
+        setcookie(
+            'remember',
+             $selector.':'.base64_encode($authenticator),
+             $timer,
+             $_SERVER['HTTP_HOST'],
+             '',
+             false, // TLS-only
+             false  // http-only
+        );
+        
+        $timer = date("Y-m-d h:i:s", $timer);
+        $authenticator = hash("sha256", $authenticator);
+        $query = "INSERT INTO auth_tokens(id, selector, token, userid, expires) ";
+        $query .= "VALUE (:id, :selector, :authenticator, :userid, :timer)";
+        $query_add = $db->prepare($query);
+        $query_add->execute([
+            'id' => 0,
+            'selector' => $selector,
+            'authenticator' => $authenticator,
+            'userid' => $userid,
+            'timer' => $timer,
+        ]);
+    }
+
+
+
     if(isset($_POST['submit'])){
         $email = htmlentities($_POST['email']);
         $pswd = hash('sha256', htmlentities($_POST['password']));
         $stay_connected = isset($_POST['stay_connected']) ? $_POST['stay_connected'] : false;
 
-        $query = "SELECT email, pswd FROM user WHERE email='{$email}' AND pswd='{$pswd}'";
-        $check = mysqli_fetch_assoc(mysqli_query($connect, $query));
+        $query = "SELECT email, pswd FROM user WHERE email= :email AND pswd= :pswd";
+        $checkStatement = $db->prepare($query);
+        $checkStatement->execute([
+            'email' => $email,
+            'pswd' => $pswd,
+        ]);
+        $check = $checkStatement->fetch(PDO::FETCH_ASSOC);
+        // var_dump($check);
+        // die();
 
         if (isset($check['email']) && ($check['email'] = $email && $check['pswd'] = $pswd)){
-            $query = "SELECT prenom, nom FROM user WHERE email = '{$email}'";
-            $id = mysqli_fetch_assoc(mysqli_query($connect, $query));
+            $query = "SELECT prenom, nom, id_user FROM user WHERE email = :email";
+            $idStatement = $db->prepare($query);
+            $idStatement->execute([
+                'email' => $email,
+            ]);
+            $id = $idStatement->fetch(PDO::FETCH_ASSOC);
+
             $user_name = $id['prenom']. ".". $id['nom'];
+            
+            // var_dump($query, $id, $test,$id["id_user"],$t2, $user_name);
+            // die();
 
-            set_auth_cookie($stay_connected);
-
-            echo '<script type="text/javascript">','login_user();','</script>';
+            set_auth_cookie($stay_connected, $id["id_user"], $db);
 
             header("Location: /index.php");
             die();
@@ -30,6 +87,8 @@
         }
     }
 ?>
+
+
 
 <div class="container-fluid">
     <form action="" method="post" ></br></br></br>
@@ -56,7 +115,7 @@
             <div></div><div></div><div></div>
         </div></br></br>
         <div class="d-flex justify-content-center align-items-center">
-            <button type="submit" name="submit" class="btn btn-primary">S'inscrire</button>
+            <button type="submit" name="submit" class="btn btn-primary">Se Connecter</button>
         </div>
     </form>
 </div>

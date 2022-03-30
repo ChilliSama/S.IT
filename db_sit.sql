@@ -53,7 +53,8 @@ INSERT INTO `seat` (`id_seat`, `pos_restrict`) VALUES (1, 1);
 --
 
 CREATE TABLE `day_seat_user` (
-  `day_date` date PRIMARY KEY NOT NULL,
+  `id` INT(4) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  `day_date` date NOT NULL,
   `day_id_user` integer DEFAULT NULL,
   `day_id_seat` integer DEFAULT NULL,
   INDEX(`day_id_user`),
@@ -72,7 +73,9 @@ CREATE TABLE `auth_tokens` (
     `id` integer(11) UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
     `selector` char(12),
     `token` char(64),
-    `userid` integer(11) UNSIGNED not null,
-    `expires` datetime
+    `userid` integer DEFAULT NULL,
+    `expires` datetime,
+    INDEX(`userid`),
+    FOREIGN KEY(`userid`) REFERENCES `user`(`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
