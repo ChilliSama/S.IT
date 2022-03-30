@@ -15,9 +15,9 @@
         $authenticator = random_bytes(33);
         
         if ($rem) {
-            $timer = time() + 36000 + 3600*24*15; //GTM+1 + 15 days
+            $timer = time() + 3600*2 + 3600*24*15; //GTM+2 + 15 days
         } else {
-            $timer = time() + 3600*2;
+            $timer = time() + 3600*2 + 3600;
         }
         setcookie(
             'remember',
@@ -74,8 +74,6 @@
             // die();
 
             set_auth_cookie($stay_connected, $id["id_user"], $db);
-
-            echo '<script type="text/javascript">','login_user();','</script>';
 
             header("Location: /index.php");
             die();
