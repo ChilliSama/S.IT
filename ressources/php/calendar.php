@@ -19,10 +19,12 @@
 
 ?>
 
-<form method="post">
-    <div class="d-flex justify-content-center align-items-center"></br></br></br>
-        <input type="submit" name="previous_day" class="btn bg-transparent" value="<">
-        <?php printf("<h5 style='display:inline-block;'>{$date}</h5>"); ?>
-        <input type="submit" name="next_day" class="btn bg-transparent" value=">">
-    </div></br>
-</form>
+<div>
+    <form method="post">
+        <div class="d-flex justify-content-center align-items-center"></br></br></br>
+            <input type="submit" name="previous_day" class="btn bg-transparent" value="<">
+            <?php printf("<h5 style='display:inline-block;'>{$date}</h5>"); ?>
+            <input type="submit" name="next_day" class="btn bg-transparent" value=">">
+        </div></br>
+    </form>
+</div>

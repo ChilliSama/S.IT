@@ -2,9 +2,13 @@
 
 <div class="container-fluid">
 
-    <div>
-        <?php include "ressources/php/calendar.php"; ?>
-    </div>
+    <?php
+        if (!empty($_SESSION['userid'])) {
+            include "ressources/php/calendar.php";
+        } else {
+            include "ressources/php/home.php";
+        }
+    ?>
 
 </div>
 

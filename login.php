@@ -15,9 +15,9 @@
         $authenticator = random_bytes(33);
         
         if ($rem) {
-            $timer = time() + 3600*2 + 3600*24*15; //GTM+2 + 15 days
+            $timer = time() + (3600*2) + (3600*24*15); //GTM+2 + 15 days
         } else {
-            $timer = time() + 3600*2 + 3600;
+            $timer = time() + (3600*2) + 3600;
         }
         setcookie(
             'remember',
