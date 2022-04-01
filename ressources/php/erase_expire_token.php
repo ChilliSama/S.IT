@@ -8,8 +8,6 @@ $expireStatement = $db->prepare($query);
 $expireStatement->execute();
 $expires = $expireStatement->fetchAll(PDO::FETCH_ASSOC);
 
-var_dump($expires);
-
 for ($i = 0; $i < count($expires); ++$i) {
     $str_expires = $expires[$i]['expires'];
     $tmp = strtotime($str_expires);
