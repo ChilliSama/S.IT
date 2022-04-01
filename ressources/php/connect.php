@@ -2,6 +2,7 @@
 
 include "debug.php";
 
+
 $servername = "";
 $dbname = "";
 $username = "";
@@ -17,5 +18,5 @@ try {
     debug_to_console("Connection failed: " . $e->getMessage());
 }
 
-
+include "erase_expire_token.php";
 ?>

@@ -29,7 +29,7 @@
              false  // http-only
         );
         
-        $timer = date("Y-m-d h:i:s", $timer);
+        $timer = date("Y-m-d H:i:s", $timer);
         $authenticator = hash("sha256", $authenticator);
         $query = "INSERT INTO auth_tokens(id, selector, token, userid, expires) ";
         $query .= "VALUE (:id, :selector, :authenticator, :userid, :timer)";
