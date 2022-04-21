@@ -44,3 +44,16 @@
         margin-top: 30%;
     }
 }
+
+.calendar-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.calendar-img {
+    max-width: 150px;
+    transform: rotate(90deg);
+    flex: 1 0 21%; /* explanation below */
+    background-color: #198754;
+    margin-left: -5px;
+}
