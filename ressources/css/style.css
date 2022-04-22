@@ -45,15 +45,40 @@
     }
 }
 
-.calendar-wrap {
-    display: flex;
-    flex-wrap: wrap;
-}
+/* .container-fluid {
+    background-color: rgba(25, 135, 84, 0.301);
+
+} */
 
 .calendar-img {
-    max-width: 150px;
-    transform: rotate(90deg);
+    max-width: 70px;
     flex: 1 0 21%; /* explanation below */
-    background-color: #198754;
-    margin-left: -5px;
+    margin-left: -4.4px;
+    background-color: rgba(25, 135, 84, 0.301);
+    /* background-color: rgba(255, 255, 255, 0.301); */
+    transition: all 0.5s;
+}
+
+.calendar-img:hover,
+.calendar-img:focus {
+    animation: pulse 0.7s;
+    box-shadow: 0 0 0 1em transparent;
+}
+
+@keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 #198754;
+    }
+  }
+
+.rot {
+    transform: rotate(180deg);
+}
+
+.rot-90 {
+    transform: rotate(90deg);
+}
+
+.rot-minus-90 {
+    transform: rotate(-90deg);
 }
