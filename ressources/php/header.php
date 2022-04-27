@@ -1,5 +1,7 @@
 <?php include "connect.php"; ?>
 <?php include "cookie.php"; ?>
+<?php include "erase_expire_token.php"; ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">

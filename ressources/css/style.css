@@ -54,6 +54,17 @@
     max-width: 70px;
     flex: 1 0 21%; /* explanation below */
     margin-left: -4.4px;
+    background-image: url("./ressources/img/desk1.png");
+    background-color: rgba(25, 135, 84, 0.301);
+    /* background-color: rgba(255, 255, 255, 0.301); */
+    transition: all 0.5s;
+}
+
+.calendar-void {
+    max-width: 70px;
+    flex: 1 0 21%; /* explanation below */
+    margin-left: -4.4px;
+    background-image: url("./ressources/img/void.png");
     background-color: rgba(25, 135, 84, 0.301);
     /* background-color: rgba(255, 255, 255, 0.301); */
     transition: all 0.5s;
