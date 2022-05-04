@@ -13,7 +13,6 @@ $expires = $expireStatement->fetchAll(PDO::FETCH_ASSOC);
 for ($i = 0; $i < count($expires); ++$i) {
     $str_expires = $expires[$i]['expires'];
     $tmp = strtotime($str_expires);
-    var_dump($tmp);
     if ($tmp < $now) {
         $query = "DELETE FROM auth_tokens WHERE expires = :expires";
         $rowStatement = $db->prepare($query);
@@ -22,5 +21,4 @@ for ($i = 0; $i < count($expires); ++$i) {
         ]);
     }
 }
-var_dump($now, $expires);
 ?>

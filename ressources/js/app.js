@@ -1,4 +1,5 @@
 window.onload = () => {
+  console.log("coucou");
   var session;
   $.ajaxSetup({cache: false})
   $.get('ressources/php/getsession.php', function (data) { 
@@ -19,7 +20,11 @@ window.onload = () => {
                           '<li><a class="dropdown-item" href="../../logout.php">Déconnexion</a></li>' +
                         '</ul>' +
                       '</div>';
+      
+      console.log(user_name);
     }
+
+    console.log(data);
   });
 
 }

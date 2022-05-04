@@ -25,22 +25,26 @@
     }
 ?>
 
-<div class="justify-content-center text-center container-bg">
-    <form method="post"></br>
-            <div class="row">
-                <div class="col">
-                    <?php if ($_SESSION['day_count'] > -15) {
-                        printf("<input type='submit' name='previous_day' class='btn bg-transparent' value='<'>");
-                        }?>
-                    <?php printf("<h5 style='display:inline-block;'>{$day}</h5>"); ?>
-                    <?php if ($_SESSION['day_count'] < 15) {
-                        printf("<input type='submit' name='next_day' class='btn bg-transparent' value='>'>");
-                        }?>
+<div class="container-fluid">
+    <div class="justify-content-center text-center container-bg">
+        <form method="post"></br>
+                <div class="row">
+                    <div class="col">
+                        <?php if ($_SESSION['day_count'] > -15) {
+                            printf("<input type='submit' name='previous_day' class='btn bg-transparent' value='<'>");
+                            }?>
+                        <?php printf("<h5 style='display:inline-block;'>{$day}</h5>"); ?>
+                        <?php if ($_SESSION['day_count'] < 15) {
+                            printf("<input type='submit' name='next_day' class='btn bg-transparent' value='>'>");
+                            }?>
+                    </div>
                 </div>
-            </div>
-    </form>
-    
-    <!-- <form method="post">
-        <?php include "openspace.php" ?>
-    </form> -->
+        </form>
+        
+        <!-- <form method="post">
+            <?php include "openspace.php" ?>
+        </form> -->
+    </div>
 </div>
+
+<?php include "footer.php"; ?>
