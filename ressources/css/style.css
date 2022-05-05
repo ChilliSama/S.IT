@@ -1,0 +1,95 @@
+.hero {
+    position: relative;
+    display: flex;
+    top: 0;
+}
+
+.hero img {
+    max-width: 45%;
+    opacity: 30%;
+    margin-right: 2%;
+    margin-bottom: 2%;
+}
+
+.hero .custom-weight {
+    font-weight: 700;
+}
+
+.hero .custom-mt {
+    z-index: 9999;
+    margin-top: 5%;
+    margin-left: 15%;
+}
+
+.hero h1 {
+    font-size: 150px;
+}
+
+.hero a {
+    font-size: 25px;
+}
+
+.hero span {
+    color: #198754;
+}
+
+@media(max-width: 900px) {
+    .hero img {
+        margin-bottom: -20%;
+        margin-right: -20%;
+        max-width: 150%;
+        opacity: 20%;
+    }
+    .hero .custom-mt {
+        margin-top: 30%;
+    }
+}
+
+/* .container-fluid {
+    background-color: rgba(25, 135, 84, 0.301);
+
+} */
+
+.calendar-img {
+    max-width: 70px;
+    flex: 1 0 21%; /* explanation below */
+    margin-left: -4.4px;
+    background-image: url("./ressources/img/desk1.png");
+    background-color: rgba(25, 135, 84, 0.301);
+    /* background-color: rgba(255, 255, 255, 0.301); */
+    transition: all 0.5s;
+}
+
+.calendar-void {
+    max-width: 70px;
+    flex: 1 0 21%; /* explanation below */
+    margin-left: -4.4px;
+    background-image: url("./ressources/img/void.png");
+    background-color: rgba(25, 135, 84, 0.301);
+    /* background-color: rgba(255, 255, 255, 0.301); */
+    transition: all 0.5s;
+}
+
+.calendar-img:hover,
+.calendar-img:focus {
+    animation: pulse 0.7s;
+    box-shadow: 0 0 0 1em transparent;
+}
+
+@keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 #198754;
+    }
+  }
+
+.rot {
+    transform: rotate(180deg);
+}
+
+.rot-90 {
+    transform: rotate(90deg);
+}
+
+.rot-minus-90 {
+    transform: rotate(-90deg);
+}

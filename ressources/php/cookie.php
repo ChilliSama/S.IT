@@ -11,17 +11,19 @@ if (empty($_SESSION['userid']) && !empty($_COOKIE['remember'])) {
         'selector' => $selector,
     ]);
     $row = $rowStatement->fetch(PDO::FETCH_ASSOC);
+    
+    if ($row != false){
+        $query = "SELECT nom, prenom FROM user WHERE id_user = :userid";
+        $userStatement = $db->prepare($query);
+        $userStatement->execute([
+            'userid' => $row['userid'],
+        ]);
+        $user = $userStatement->fetch(PDO::FETCH_ASSOC);
 
-    $query = "SELECT nom, prenom FROM user WHERE id_user = :userid";
-    $userStatement = $db->prepare($query);
-    $userStatement->execute([
-        'userid' => $row['userid'],
-    ]);
-    $user = $userStatement->fetch(PDO::FETCH_ASSOC);
-
-    if (hash_equals($row['token'], hash('sha256', base64_decode($authenticator)))) {
-        $_SESSION['userid'] = $row['userid'];
-        $_SESSION['username'] = $user['prenom'] . "." . $user['nom'];
+        if (hash_equals($row['token'], hash('sha256', base64_decode($authenticator)))) {
+            $_SESSION['userid'] = $row['userid'];
+            $_SESSION['username'] = $user['prenom'] . "." . $user['nom'];
+        }
     }
 }
 ?>

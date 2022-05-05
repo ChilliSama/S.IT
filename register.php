@@ -41,7 +41,7 @@
             // die();
 
             if ($query_add = 1){
-                header("Location: /index.php");
+                header("Location: index.php");
                 die();
             } else {
                 echo '  </br>

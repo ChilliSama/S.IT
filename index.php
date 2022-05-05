@@ -1,11 +1,11 @@
 <?php include "ressources/php/header.php"; ?>
 
-<div class="container-fluid">
-
-    <div>
-        <?php include "ressources/php/calendar.php"; ?>
-    </div>
-
-</div>
+<?php
+    if (!empty($_SESSION['userid'])) {
+        include "ressources/php/calendar.php";
+    } else {
+        include "ressources/php/home.php";
+    }
+?>
 
 <?php include "ressources/php/footer.php"; ?>

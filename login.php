@@ -15,9 +15,9 @@
         $authenticator = random_bytes(33);
         
         if ($rem) {
-            $timer = time() + 3600*2 + 3600*24*15; //GTM+2 + 15 days
+            $timer = time() + (3600*2) + (3600*24*15); //GTM+2 + 15 days
         } else {
-            $timer = time() + 3600*2 + 3600;
+            $timer = time() + (3600*2) + 3600;
         }
         setcookie(
             'remember',
@@ -29,7 +29,7 @@
              false  // http-only
         );
         
-        $timer = date("Y-m-d h:i:s", $timer);
+        $timer = date("Y-m-d H:i:s", $timer);
         $authenticator = hash("sha256", $authenticator);
         $query = "INSERT INTO auth_tokens(id, selector, token, userid, expires) ";
         $query .= "VALUE (:id, :selector, :authenticator, :userid, :timer)";
@@ -75,7 +75,7 @@
 
             set_auth_cookie($stay_connected, $id["id_user"], $db);
 
-            header("Location: /index.php");
+            header("Location: index.php");
             die();
         } else {
             echo '  </br>

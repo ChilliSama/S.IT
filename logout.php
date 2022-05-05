@@ -18,7 +18,7 @@ if (!empty($_SESSION['userid']) && !empty($_COOKIE['remember'])) {
     unset($_SESSION['userid']);
     unset($_SESSION['username']);
 
-    header("Location: /index.php");
+    header("Location: index.php");
 }
 
 ?>
