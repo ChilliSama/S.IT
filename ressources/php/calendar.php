@@ -42,9 +42,7 @@
         </form>
         
         <!-- <form method="post">
-            <?php include "openspace.php" ?>
+            
         </form> -->
     </div>
 </div>
-
-<?php include "footer.php"; ?>

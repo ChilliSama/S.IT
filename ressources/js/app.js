@@ -1,8 +1,7 @@
 window.onload = () => {
-  console.log("coucou");
   var session;
   $.ajaxSetup({cache: false})
-  $.get('ressources/php/getsession.php', function (data) { 
+  $.get('/S.IT/ressources/php/getsession.php', function (data) { 
     session = JSON.parse(data);
 
     if (session['username']){
@@ -14,17 +13,11 @@ window.onload = () => {
                           user_name +
                         '</button>' +
                         '<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">' +
-                          '<li><a class="dropdown-item" href="#">Profile</a></li>' +
-                          '<li><a class="dropdown-item" href="#">Paramètres</a></li>' +
                           '<li><hr class="dropdown-divider"></li>' +
-                          '<li><a class="dropdown-item" href="../../logout.php">Déconnexion</a></li>' +
+                          '<li><a class="dropdown-item" href="/S.IT/logout.php">Déconnexion</a></li>' +
                         '</ul>' +
                       '</div>';
-      
-      console.log(user_name);
     }
-
-    console.log(data);
   });
 
 }

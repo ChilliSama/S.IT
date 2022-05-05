@@ -75,7 +75,7 @@
 
             set_auth_cookie($stay_connected, $id["id_user"], $db);
 
-            header("Location: /index.php");
+            header("Location: index.php");
             die();
         } else {
             echo '  </br>
